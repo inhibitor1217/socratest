@@ -1,0 +1,13 @@
+{
+  "name": "@socratest/nodejs-adapter",
+  "version": "0.0.1",
+  "description": "A node.js adapter for Socratest",
+  "main": "src/index.ts",
+  "repository": "https://github.com/inhibitor1217/socratest",
+  "author": "inhibitor <inhibitor@kaist.ac.kr>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "typescript": "^4.4.2"
+  }
+}
