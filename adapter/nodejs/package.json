@@ -5,10 +5,15 @@
   "bin": {
     "socratest": "./dist/bin/socratest.js"
   },
-  "main": "src/index.ts",
+  "main": "dist/bin/socratest.js",
   "scripts": {
     "build:bin": "make build-bin"
   },
+  "files": [
+    "dist/**/*",
+    "package.json",
+    "README.md"
+  ],
   "repository": "https://github.com/inhibitor1217/socratest",
   "author": "inhibitor <inhibitor@kaist.ac.kr>",
   "license": "MIT",
