@@ -1,0 +1,15 @@
+{
+  "name": "@socratest/nodejs-example",
+  "version": "0.0.1",
+  "description": "An example usecase of Socratest in Node.js environment",
+  "main": "src/index.js",
+  "repository": "https://github.com/inhibitor1217/socratest",
+  "author": "inhibitor <inhibitor@kaist.ac.kr>",
+  "license": "MIT",
+  "scripts": {
+    "adapter": "node_modules/@socratest/nodejs-adapter/.bin/nodejs-adapter-macos"
+  },
+  "devDependencies": {
+    "@socratest/nodejs-adapter": "link:../../../adapter/nodejs"
+  }
+}

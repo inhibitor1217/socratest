@@ -1,0 +1,9 @@
+{
+  "platform": "nodejs",
+  "targets": [
+    {
+      "test": "Fibonacci",
+      "function": "./src/fibonacci"
+    }
+  ]
+}
