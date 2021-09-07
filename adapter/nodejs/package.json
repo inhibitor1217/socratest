@@ -2,12 +2,20 @@
   "name": "@socratest/nodejs-adapter",
   "version": "0.0.1",
   "description": "A node.js adapter for Socratest",
+  "bin": {
+    "socratest": "./dist/bin/socratest.js"
+  },
   "main": "src/index.ts",
+  "scripts": {
+    "build:bin": "make build-bin"
+  },
   "repository": "https://github.com/inhibitor1217/socratest",
   "author": "inhibitor <inhibitor@kaist.ac.kr>",
   "license": "MIT",
   "private": false,
   "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/node": "^16.7.13",
     "typescript": "^4.4.2"
   }
 }
