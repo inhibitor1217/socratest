@@ -1,5 +1,9 @@
-export async function execute(args: string[]): Promise<number> {
-  console.log(args)
+import _ from 'lodash'
+import { CommandLineOptionsRepository } from './options'
 
-  return 0;
+export async function execute(argv: string[]): Promise<number> {
+  const args = new CommandLineOptionsRepository(argv).options
+  console.log(args.config)
+
+  return 0
 }
