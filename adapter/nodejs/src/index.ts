@@ -1,12 +1,15 @@
 import _ from 'lodash'
+import { ConfigRepositoryFactory } from './config'
 import { CommandLineOptionsRepository } from './options'
-import { BaseError, NotImplementedError } from './util/error'
+import { BaseError } from './util/error'
 import { BaseException } from './util/exception'
 
 export async function execute(argv: string[]): Promise<number> {
   try {
     const args = new CommandLineOptionsRepository(argv).options
-    console.log(args.config)
+    const config = ConfigRepositoryFactory.from(args).config
+
+    console.log(config)
 
     return 0
   } catch (e) {
