@@ -3,9 +3,11 @@ import _ from 'lodash'
 import { InvalidConfigException } from '../exception'
 import type {
   SocratestTestTarget,
+  SocratestTestProvider,
   SocratestConfig,
   SocratestConfigValidator,
 } from '../interface'
+import { ProviderConfigSchemaValidatorFactory } from './provider'
 
 @autobind
 export default class ConfigSchemaValidator implements SocratestConfigValidator {
@@ -23,8 +25,10 @@ export default class ConfigSchemaValidator implements SocratestConfigValidator {
     if (!_.isArray(targets)) {
       throw new InvalidConfigException('targets', 'should be array')
     }
-
     targets.forEach(this.validateTestTarget)
+
+    const provider = _.get(raw, 'provider')
+    this.validateProvider(provider)
   }
 
   private validateTestTarget(raw: any): asserts raw is SocratestTestTarget {
@@ -38,5 +42,11 @@ export default class ConfigSchemaValidator implements SocratestConfigValidator {
     if (!_.isString(fn) || _.isEmpty(fn)) {
       throw new InvalidConfigException(`targets[].function`, 'should be nonempty string')
     }
+  }
+
+  private validateProvider(raw: any): asserts raw is SocratestTestProvider {
+    return ProviderConfigSchemaValidatorFactory
+      .from(raw)
+      .validate(raw)
   }
 }

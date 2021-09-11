@@ -3,6 +3,11 @@ export * from './validator'
 
 export type {
   SocratestTestTarget,
+  
+  BaseSocratestTestProvider,
+  SocratestLocalTestProvider,
+  SocratestTestProvider,
+
   SocratestConfig,
   SocratestConfigValidator,
   SocratestConfigRepository,
