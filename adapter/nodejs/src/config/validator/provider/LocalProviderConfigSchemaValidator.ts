@@ -1,5 +1,6 @@
 import autobind from 'autobind-decorator'
 import _ from 'lodash'
+import { SocratestTestProviderTypeExtension } from '../..'
 import { InvalidConfigException } from '../../exception'
 import type { SocratestLocalTestProvider } from '../../interface'
 import type { ProviderConfigSchemaValidator } from './interface'
@@ -13,6 +14,8 @@ export default class LocalProviderConfigSchemaValidator
   }
 
   validate(config: any): asserts config is SocratestLocalTestProvider {
+    _.set(config, 'type', new SocratestTestProviderTypeExtension(_.get(config, 'type')))
+    
     const location = _.get(config, 'location')
     
     if (!_.isString(location) || _.isEmpty(location)) {
