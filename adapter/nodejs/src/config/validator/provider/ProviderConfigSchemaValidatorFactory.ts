@@ -13,12 +13,11 @@ class ProviderConfigSchemaValidatorFactory {
     try {
       const type = SocratestTestProviderTypeExtension.parse(_.get(config, 'type'))
 
-      switch (type.value) {
-        case SocratestTestProviderType.Local:
-          return new LocalProviderConfigSchemaValidator()
-        default:
-          unreachable()
+      if (type.is(SocratestTestProviderType.Local)) {
+        return new LocalProviderConfigSchemaValidator()
       }
+
+      unreachable()
     } catch (e) {
       if (e instanceof TypeError) {
         throw new InvalidConfigException('provider.type', e.message)
