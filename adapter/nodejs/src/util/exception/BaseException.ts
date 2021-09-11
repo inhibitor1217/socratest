@@ -18,4 +18,9 @@ export default class BaseException extends Error {
     this.message = message
     this.returnCode = returnCode ?? 1
   }
+
+  appendMessage(message: string): this {
+    this.message += `\n  ${message}`
+    return this
+  }
 }

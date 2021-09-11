@@ -7,12 +7,15 @@ import { BaseException } from './util/exception'
 export async function execute(argv: string[]): Promise<number> {
   try {
     const args = new CommandLineOptionsRepository(argv).options
-    const config = ConfigRepositoryFactory.from(args).config
+    const config = await ConfigRepositoryFactory.from(args).config
 
     console.log(config)
 
     return 0
   } catch (e) {
+    console.warn(`Program encountered an exception during execution.
+    `)
+
     if (e instanceof BaseException) {
       console.warn(`${e.name}: ${e.message}`)
       return e.returnCode

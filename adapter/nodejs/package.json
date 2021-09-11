@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "argparse": "^2.0.1",
+    "autobind-decorator": "^2.4.0",
     "lodash": "^4.17.21"
   }
 }

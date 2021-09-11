@@ -10,6 +10,11 @@ export interface SocratestConfig {
   targets: SocratestTestTarget[]
 }
 
+export interface SocratestConfigValidator {
+  validate(config: any): asserts config is SocratestConfig
+  validationPipe(config: any): SocratestConfig
+}
+
 export interface SocratestConfigRepository {
   get config(): Promise<SocratestConfig>
 }
