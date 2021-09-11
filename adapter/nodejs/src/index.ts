@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { ConfigRepositoryFactory } from './config'
 import { CommandLineOptionsRepository } from './options'
+import { TestRepositoryFactory } from './test'
 import { BaseError } from './util/error'
 import { BaseException } from './util/exception'
 
@@ -8,8 +9,7 @@ export async function execute(argv: string[]): Promise<number> {
   try {
     const args = new CommandLineOptionsRepository(argv).options
     const config = await ConfigRepositoryFactory.from(args).config
-
-    console.log(config)
+    const testRepository = TestRepositoryFactory.from(config.provider)
 
     return 0
   } catch (e) {

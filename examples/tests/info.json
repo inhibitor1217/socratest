@@ -1,45 +1,64 @@
 {
+  "version": 1,
   "tests": [
     {
       "id": "TEST_000",
       "name": "Fibonacci",
       "description": "Calculates n-th fibonacci sequence",
       "tags": [],
+      "meta": {
+        "version": 1
+      },
       "cases": [
         {
           "id": "TESTCASE_000",
           "name": "Case 1",
           "description": "",
           "inputFile": "./TEST_000/TESTCASE_000.in",
-          "outputFile": "./TEST_000/TESTCASE_000.out"
+          "outputFile": "./TEST_000/TESTCASE_000.out",
+          "meta": {
+            "version": 1
+          }
         },
         {
           "id": "TESTCASE_001",
           "name": "Case 2",
           "description": "",
           "inputFile": "./TEST_000/TESTCASE_001.in",
-          "outputFile": "./TEST_000/TESTCASE_001.out"
+          "outputFile": "./TEST_000/TESTCASE_001.out",
+          "meta": {
+            "version": 1
+          }
         },
         {
           "id": "TESTCASE_002",
           "name": "Case 3",
           "description": "",
           "inputFile": "./TEST_000/TESTCASE_002.in",
-          "outputFile": "./TEST_000/TESTCASE_002.out"
+          "outputFile": "./TEST_000/TESTCASE_002.out",
+          "meta": {
+            "version": 1
+          }
         },
         {
           "id": "TESTCASE_003",
           "name": "Case 4",
           "description": "",
           "inputFile": "./TEST_000/TESTCASE_003.in",
-          "outputFile": "./TEST_000/TESTCASE_003.out"
+          "outputFile": "./TEST_000/TESTCASE_003.out",
+          "meta": {
+            "version": 1
+          }
         },
         {
           "id": "TESTCASE_004",
           "name": "Case 5",
           "description": "",
           "inputFile": "./TEST_000/TESTCASE_004.in",
-          "outputFile": "./TEST_000/TESTCASE_004.out"
+          "outputFile": "./TEST_000/TESTCASE_004.out",
+          "meta": {
+            "version": 1
+          }
         }
       ]
     }
