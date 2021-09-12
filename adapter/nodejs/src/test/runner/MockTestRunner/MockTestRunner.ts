@@ -1,9 +1,11 @@
+import autobind from 'autobind-decorator';
 import type { SocratestTest } from '../../model';
 import type {
   SocratestTestRunner,
   SocratestTestRunnerResult,
 } from '../interface'
 
+@autobind
 export default class MockTestRunner implements SocratestTestRunner {
   run(tests: SocratestTest[]): Promise<SocratestTestRunnerResult> {
     return Promise.resolve({

@@ -1,5 +1,7 @@
+import autobind from 'autobind-decorator'
 import type { Writer } from './interface'
 
+@autobind
 export default class ConsoleWriter implements Writer {
   log(str: string): Promise<void> {
     return Promise.resolve(console.log(str))

@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { ConfigRepositoryFactory } from './config'
+import { SimpleTestRunnerResultFormatter } from './logger/formatter'
 import { ConsoleWriter } from './logger/writer'
 import { CommandLineOptionsRepository } from './options'
 import {
@@ -16,11 +17,13 @@ export async function execute(argv: string[]): Promise<number> {
     const args = new CommandLineOptionsRepository(argv).options
     const config = await ConfigRepositoryFactory.from(args).config
     const testRepository = TestRepositoryFactory.from(config.provider)
-    
     const runner = new MockTestRunner()
-    const result = await runner.run(await testRepository.tests)
+    const testResultFormatter = new SimpleTestRunnerResultFormatter()
 
-    writer.log(result.toString())
+    testRepository.tests
+      .then(runner.run)
+      .then(testResultFormatter.format)
+      .then(writer.log)
 
     return 0
   } catch (e) {
