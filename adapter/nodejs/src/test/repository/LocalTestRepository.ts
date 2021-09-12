@@ -1,9 +1,14 @@
 import autobind from 'autobind-decorator'
 import { readFile } from 'fs/promises'
 import { resolve } from 'path'
+import {
+  get,
+  map,
+} from 'lodash/fp'
 import type { SocratestLocalTestProvider } from '../../config'
 import { LocalTestInfoNotFoundError } from '../error'
 import type { SocratestTestRepository } from '../interface'
+import SocratestTest from '../model/SocratestTest'
 
 @autobind
 export default class LocalTestRepository implements SocratestTestRepository {
@@ -13,6 +18,13 @@ export default class LocalTestRepository implements SocratestTestRepository {
 
   constructor(config: SocratestLocalTestProvider) {
     this.config = config
+  }
+
+  get tests(): Promise<SocratestTest[]> {
+    return this.readTestInfo()
+      .then(get('tests'))
+      // TODO: add validation of DTO
+      .then(map((dto: any) => new SocratestTest(dto)))
   }
 
   private readTestInfo(): Promise<any> {

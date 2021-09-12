@@ -1,27 +1,5 @@
-export interface SocratestTestCaseMeta {
-  version: number
-}
-
-export interface SocratestTestCase {
-  id: string
-  name: string
-  description: string
-  meta: SocratestTestCaseMeta
-}
-
-export interface SocratestTestMeta {
-  version: number
-}
-
-export interface SocratestTest {
-  id: string
-  name: string
-  description: string
-  tags: string[]
-  cases: SocratestTestCase[]
-  meta: SocratestTestMeta
-}
+import type { SocratestTest } from './model'
 
 export interface SocratestTestRepository {
-
+  readonly tests: Promise<SocratestTest[]>
 }

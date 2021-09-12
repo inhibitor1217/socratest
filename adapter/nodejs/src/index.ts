@@ -10,6 +10,7 @@ export async function execute(argv: string[]): Promise<number> {
     const args = new CommandLineOptionsRepository(argv).options
     const config = await ConfigRepositoryFactory.from(args).config
     const testRepository = TestRepositoryFactory.from(config.provider)
+    const tests = await testRepository.tests
 
     return 0
   } catch (e) {
