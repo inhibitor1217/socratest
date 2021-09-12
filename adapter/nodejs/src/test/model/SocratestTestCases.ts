@@ -11,4 +11,12 @@ export default class SocratestTestCases {
   constructor(dto: SocratestTestCasesDto) {
     this.items = dto.items.map((caseDto) => new SocratestTestCase(caseDto))
   }
+
+  get size(): number {
+    return this.items.length
+  }
+
+  map<ReturnType>(fn: (item: SocratestTestCase) => ReturnType): ReturnType[] {
+    return this.items.map(fn)
+  }
 }
