@@ -22,7 +22,7 @@ export default class CommandLineOptionsRepository implements SocratestOptionsRep
     this.parser.add_argument('-c', '--config', { help: 'specify configuration file. default is .socratestrc.json.' })
   }
 
-  get options(): SocratestOptions {
-    return merge(defaultSocratestOptions, this.cmdArgs)
+  get options(): Promise<SocratestOptions> {
+    return Promise.resolve(merge(defaultSocratestOptions, this.cmdArgs))
   }
 }

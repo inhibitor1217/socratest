@@ -3,5 +3,5 @@ export interface SocratestOptions {
 }
 
 export interface SocratestOptionsRepository {
-  get options(): SocratestOptions
+  get options(): Promise<SocratestOptions>
 }

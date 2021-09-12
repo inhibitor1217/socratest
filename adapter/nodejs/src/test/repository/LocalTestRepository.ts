@@ -8,7 +8,7 @@ import {
 import type { SocratestLocalTestProvider } from '../../config'
 import { LocalTestInfoNotFoundError } from '../error'
 import { SocratestTest } from '../model'
-import type { SocratestTestRepository } from '../interface'
+import type { SocratestTestRepository } from './interface'
 
 @autobind
 export default class LocalTestRepository implements SocratestTestRepository {
