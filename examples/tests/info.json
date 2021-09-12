@@ -60,6 +60,68 @@
           }
         }
       ]
+    },
+    {
+      "id": "TEST_001",
+      "name": "Rounding",
+      "description": "Rounds a floating point number to formatted string, with specified number of digits",
+      "tags": [],
+      "meta": {
+        "version": 1
+      },
+      "cases": [
+        {
+          "id": "TESTCASE_005",
+          "name": "PI",
+          "description": "Correctly rounds remainders under specified digit",
+          "inputFile": "./TEST_001/TESTCASE_005.in",
+          "outputFile": "./TEST_001/TESTCASE_005.out",
+          "meta": {
+            "version": 1
+          }
+        },
+        {
+          "id": "TESTCASE_006",
+          "name": "One",
+          "description": "Fills zero until specified digit",
+          "inputFile": "./TEST_001/TESTCASE_006.in",
+          "outputFile": "./TEST_001/TESTCASE_006.out",
+          "meta": {
+            "version": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "TEST_002",
+      "name": "Pascal case",
+      "description": "Converts a string to pascal case",
+      "tags": [],
+      "meta": {
+        "version": 1
+      },
+      "cases": [
+        {
+          "id": "TESTCASE_007",
+          "name": "Case 1",
+          "description": "",
+          "inputFile": "./TEST_002/TESTCASE_007.in",
+          "outputFile": "./TEST_002/TESTCASE_007.out",
+          "meta": {
+            "version": 1
+          }
+        },
+        {
+          "id": "TESTCASE_008",
+          "name": "Case 2",
+          "description": "Single word",
+          "inputFile": "./TEST_002/TESTCASE_008.in",
+          "outputFile": "./TEST_002/TESTCASE_008.out",
+          "meta": {
+            "version": 1
+          }
+        }
+      ]
     }
   ]
 }
