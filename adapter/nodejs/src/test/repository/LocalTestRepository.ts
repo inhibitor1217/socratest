@@ -7,8 +7,8 @@ import {
 } from 'lodash/fp'
 import type { SocratestLocalTestProvider } from '../../config'
 import { LocalTestInfoNotFoundError } from '../error'
+import { SocratestTest } from '../model'
 import type { SocratestTestRepository } from '../interface'
-import SocratestTest from '../model/SocratestTest'
 
 @autobind
 export default class LocalTestRepository implements SocratestTestRepository {
