@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { ConfigRepositoryFactory } from './config'
+import { ConsoleWriter } from './logger/writer'
 import { CommandLineOptionsRepository } from './options'
 import {
   MockTestRunner,
@@ -9,6 +10,8 @@ import { BaseError } from './util/error'
 import { BaseException } from './util/exception'
 
 export async function execute(argv: string[]): Promise<number> {
+  const writer = new ConsoleWriter()
+
   try {
     const args = new CommandLineOptionsRepository(argv).options
     const config = await ConfigRepositoryFactory.from(args).config
@@ -17,25 +20,25 @@ export async function execute(argv: string[]): Promise<number> {
     const runner = new MockTestRunner()
     const result = await runner.run(await testRepository.tests)
 
-    console.log(result)
+    writer.log(result.toString())
 
     return 0
   } catch (e) {
-    console.warn(`Program encountered an exception during execution.
+    writer.warn(`Program encountered an exception during execution.
     `)
 
     if (e instanceof BaseException) {
-      console.warn(`${e.name}: ${e.message}`)
+      writer.warn(`${e.name}: ${e.message}`)
       return e.returnCode
     }
 
     if (e instanceof BaseError) {
-      console.error(e.stack)
+      writer.error(e.stack ?? '')
       return e.returnCode
     }
 
-    console.error('An unexpected error occurred:')
-    console.error(e)
+    writer.error('An unexpected error occurred:')
+    writer.error((e as any).toString())
     return -1
   }
 }
