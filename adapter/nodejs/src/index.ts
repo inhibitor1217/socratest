@@ -6,7 +6,7 @@ import { SimpleTestRunnerResultFormatter } from './logger/formatter'
 import { ConsoleWriter } from './logger/writer'
 import { CommandLineOptionsRepository } from './options'
 import { TestRepositoryFactory } from './test/repository'
-import { MockTestRunner } from './test/runner'
+import { JsNativeTestRunner } from './test/runner'
 import { RETURN_CODES } from './util/const'
 import { BaseError } from './util/error'
 import { BaseException } from './util/exception'
@@ -17,7 +17,7 @@ import {
 
 export async function execute(argv: string[]): Promise<number> {
   const writer = new ConsoleWriter()
-  const runner = new MockTestRunner()
+  const runner = new JsNativeTestRunner()
   const grader = new StrictGrader()
   const formatter = new SimpleTestRunnerResultFormatter()
 
