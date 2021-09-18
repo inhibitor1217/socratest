@@ -17,7 +17,6 @@ import {
 
 export async function execute(argv: string[]): Promise<number> {
   const writer = new ConsoleWriter()
-  const runner = new JsNativeTestRunner()
   const grader = new StrictGrader()
   const formatter = new SimpleTestRunnerResultFormatter()
 
@@ -27,20 +26,21 @@ export async function execute(argv: string[]): Promise<number> {
       .then(requires)
       .then(ConfigRepositoryFactory.from)
       .then(get('config'))
-      .then(get('provider'))
       .then(requires)
-      .then(TestRepositoryFactory.from)
-      .then(get('tests'))
-      .then(requires)
-      .then(async (tests) => {
-        const result = await runner.run(tests)
-
-        Promise.resolve(result)
-          .then(formatter.format)
-          .then(writer.log)
-
-        return grader.grade(tests, result)
-      })
+      .then((config) => Promise.resolve(config.provider)
+          .then(TestRepositoryFactory.from)
+          .then(get('tests'))
+          .then(requires)
+          .then((tests) => ({ config, tests })))
+      .then(({ config, tests }) => Promise.resolve(config)
+          .then(instance(JsNativeTestRunner))
+          .then((runner) => runner.run(tests))
+          .then((result) => {
+            Promise.resolve(result)
+              .then(formatter.format)
+              .then(writer.log)
+            return grader.grade(tests, result)
+          }))
       .then((success) => success ? RETURN_CODES.OK : RETURN_CODES.FAIL)
       .catch((e) => {
         writer.warn('Program encountered an exception during execution.\n')
