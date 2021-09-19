@@ -4,6 +4,10 @@
     {
       "test": "Fibonacci",
       "function": "./src/fibonacci"
+    },
+    {
+      "test": "Rounding",
+      "function": "./src/format.round"
     }
   ],
   "provider": {
