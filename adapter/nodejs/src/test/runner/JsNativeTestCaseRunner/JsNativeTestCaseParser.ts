@@ -39,6 +39,10 @@ export default class JsNativeTestCaseParser {
     switch (type) {
       case 'int':
         return Number(value)
+      case 'double':
+        return Number(value)
+      case 'string':
+        return value
       default:
         throw new TestCaseParseError(`unsupported input parameter type: ${type}`)
     }
