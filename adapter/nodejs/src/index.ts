@@ -6,7 +6,10 @@ import { SimpleTestRunnerResultFormatter } from './logger/formatter'
 import { ConsoleWriter } from './logger/writer'
 import { CommandLineOptionsRepository } from './options'
 import { TestRepositoryFactory } from './test/repository'
-import { JsNativeTestRunner } from './test/runner'
+import {
+  IndividualTestRunner,
+  MockTestCaseRunner,
+} from './test/runner'
 import { RETURN_CODES } from './util/const'
 import { BaseError } from './util/error'
 import { BaseException } from './util/exception'
@@ -33,7 +36,7 @@ export async function execute(argv: string[]): Promise<number> {
           .then(requires)
           .then((tests) => ({ config, tests })))
       .then(({ config, tests }) => Promise.resolve(config)
-          .then(instance(JsNativeTestRunner))
+          .then((config) => new IndividualTestRunner(config, new MockTestCaseRunner()))
           .then((runner) => runner.run(tests))
           .then((result) => {
             Promise.resolve(result)

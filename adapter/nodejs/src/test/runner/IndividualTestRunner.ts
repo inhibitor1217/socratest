@@ -11,19 +11,17 @@ import {
 import type {
   SocratestConfig,
   SocratestTestTarget,
-} from '../../../config'
-import { TargetNotFoundException } from '../../exception'
+} from '../../config'
+import { compose } from '../../util/pipe'
+import { TargetNotFoundException } from '../exception'
+import { SocratestTest, SocratestTestCase } from '../model'
 import type {
   SocratestTestCaseResult,
   SocratestTestResult,
-  SocratestTestRunner,
   SocratestTestRunnerResult,
-} from '../interface'
-import type {
-  SocratestTest,
-  SocratestTestCase,
-} from '../../model'
-import { compose } from '../../../util/pipe'
+  SocratestTestRunner,
+  SocratestTestCaseRunner,
+} from './interface'
 
 interface SocratestTestExecution {
   target: SocratestTestTarget
@@ -32,11 +30,13 @@ interface SocratestTestExecution {
 }
 
 @autobind
-export default class JsNativeTestRunner implements SocratestTestRunner {
+export default class IndividualTestRunner implements SocratestTestRunner {
   readonly config: SocratestConfig
+  readonly testcaseRunner: SocratestTestCaseRunner
 
-  constructor(config: SocratestConfig) {
+  constructor(config: SocratestConfig, testcaseRunner: SocratestTestCaseRunner) {
     this.config = config
+    this.testcaseRunner = testcaseRunner
   }
 
   run(tests: SocratestTest[]): Promise<SocratestTestRunnerResult> {
@@ -95,11 +95,7 @@ export default class JsNativeTestRunner implements SocratestTestRunner {
     target: SocratestTestTarget,
     testcase: SocratestTestCase,
   ): Promise<SocratestTestCaseResult> {
-    return Promise.resolve({
-      id: testcase.id,
-      name: testcase.name,
-      result: true,
-    })
+    return this.testcaseRunner.run(target, testcase)
   }
 
   private composeTestCount(executions: SocratestTestExecution[]): SocratestTestRunnerResult['count']['test'] {

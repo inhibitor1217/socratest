@@ -1,4 +1,8 @@
-import type { SocratestTest } from '../model'
+import type { SocratestTestTarget } from '../../config';
+import type {
+  SocratestTest,
+  SocratestTestCase,
+} from '../model'
 
 export interface SocratestTestCaseResult {
   id: string
@@ -39,4 +43,8 @@ export interface SocratestTestRunnerResult {
 
 export interface SocratestTestRunner {
   run(tests: SocratestTest[]): Promise<SocratestTestRunnerResult>
+}
+
+export interface SocratestTestCaseRunner {
+  run(target: SocratestTestTarget, testcase: SocratestTestCase): Promise<SocratestTestCaseResult>
 }

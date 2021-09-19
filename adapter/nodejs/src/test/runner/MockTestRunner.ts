@@ -1,9 +1,9 @@
 import autobind from 'autobind-decorator';
-import type { SocratestTest } from '../../model';
+import type { SocratestTest } from '../model';
 import type {
   SocratestTestRunner,
   SocratestTestRunnerResult,
-} from '../interface'
+} from './interface'
 
 @autobind
 export default class MockTestRunner implements SocratestTestRunner {
