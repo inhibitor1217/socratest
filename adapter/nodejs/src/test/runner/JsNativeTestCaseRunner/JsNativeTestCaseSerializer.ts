@@ -9,7 +9,7 @@ import {
 import { TestCaseParseError } from '../../error'
 
 @autobind
-export default class JsNativeTestCaseParser {
+export default class JsNativeTestCaseSerializer {
   parse(content: string): any[] {
     return flow(
       this.splitContent,

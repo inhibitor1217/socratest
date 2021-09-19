@@ -14,7 +14,7 @@ import type {
 import { SimpleTestCaseFileReader } from '../util/TestCaseFileReader'
 import type { TestCaseFileReader } from '../util/TestCaseFileReader'
 import JsNativeTargetResolver from './JsNativeTargetResolver'
-import JsNativeTestCaseParser from './JsNativeTestCaseParser'
+import JsNativeTestCaseSerializer from './JsNativeTestCaseSerializer'
 
 @autobind
 export default class JsNativeTestCaseRunner implements SocratestTestCaseRunner {
@@ -22,21 +22,21 @@ export default class JsNativeTestCaseRunner implements SocratestTestCaseRunner {
   
   private readonly targetResolver: JsNativeTargetResolver
   private readonly fileReader: TestCaseFileReader
-  private readonly testcaseParser: JsNativeTestCaseParser
+  private readonly serializer: JsNativeTestCaseSerializer
 
   constructor(
     config: SocratestConfig,
     depends?: {
       targetResolver?: JsNativeTargetResolver
       fileReader?: TestCaseFileReader
-      testcaseParser?: JsNativeTestCaseParser
+      serializer?: JsNativeTestCaseSerializer
     },
   ) {
     this.config = config
 
     this.targetResolver = depends?.targetResolver ?? new JsNativeTargetResolver()
     this.fileReader = depends?.fileReader ?? new SimpleTestCaseFileReader()
-    this.testcaseParser = depends?.testcaseParser ?? new JsNativeTestCaseParser()
+    this.serializer = depends?.serializer ?? new JsNativeTestCaseSerializer()
   }
   
   run(
@@ -48,9 +48,9 @@ export default class JsNativeTestCaseRunner implements SocratestTestCaseRunner {
       .then(compose({
         fn: identity,
         input: this.fileReader.input(this.config, testcase)
-          .then(this.testcaseParser.parse),
+          .then(this.serializer.parse),
         output: this.fileReader.output(this.config, testcase)
-          .then(this.testcaseParser.parse),
+          .then(this.serializer.parse),
       }))
       .then(compose({
         fn: get('fn'),
