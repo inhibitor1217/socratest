@@ -59,7 +59,7 @@ export async function execute(argv: string[]): Promise<number> {
         }
 
         writer.error('An unexpected error occurred:')
-        writer.error((e as any).toString())
+        writer.error(e.stack)
         return RETURN_CODES.UNEXPECTED_FAIL
       })
 }
