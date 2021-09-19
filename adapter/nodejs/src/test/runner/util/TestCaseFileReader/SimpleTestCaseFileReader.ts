@@ -23,6 +23,6 @@ export default class SimpleTestCaseFileReader implements TestCaseFileReader {
     config: SocratestConfig,
     path: string,
   ): Promise<string> {
-    return readFile(resolve(config.provider.location, path), 'utf-8')
+    return readFile(resolve(config.provider.location, path), { encoding: 'utf-8' })
   }
 }
