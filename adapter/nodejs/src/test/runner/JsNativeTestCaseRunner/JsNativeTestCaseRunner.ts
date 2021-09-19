@@ -1,6 +1,9 @@
 import autobind from 'autobind-decorator'
 import _ from 'lodash'
-import { get, identity } from 'lodash/fp'
+import {
+  get,
+  identity,
+} from 'lodash/fp'
 import type {
   SocratestConfig,
   SocratestTestTarget,
@@ -47,10 +50,8 @@ export default class JsNativeTestCaseRunner implements SocratestTestCaseRunner {
       .then(this.targetResolver.resolve)
       .then(compose({
         fn: identity,
-        input: this.fileReader.input(this.config, testcase)
-          .then(this.serializer.parse),
-        output: this.fileReader.output(this.config, testcase)
-          .then(this.serializer.parse),
+        input: this.fileReader.input(this.config, testcase),
+        output: this.fileReader.output(this.config, testcase),
       }))
       .then(compose({
         fn: get('fn'),
@@ -66,16 +67,17 @@ export default class JsNativeTestCaseRunner implements SocratestTestCaseRunner {
   }
 
   private runFunction(
-    fn: any,
-    input: any[],
-  ): Promise<any> {
-    return Promise.resolve(fn(...input))
+    fn: (...args: any[]) => any,
+    input: string,
+  ): Promise<string> {
+    return Promise.resolve(fn(...this.serializer.parse(input)))
+      .then(this.serializer.stringify)
   }
 
   private compareResult(
-    output: any,
-    expectedOutput: any,
+    output: string,
+    expectedOutput: string,
   ) {
-    return _.isEqual([output], expectedOutput)
+    return _.isEqual(output.trim(), expectedOutput.trim())
   }
 }

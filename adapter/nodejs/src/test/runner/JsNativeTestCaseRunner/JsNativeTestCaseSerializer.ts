@@ -47,4 +47,19 @@ export default class JsNativeTestCaseSerializer {
         throw new TestCaseParseError(`unsupported input parameter type: ${type}`)
     }
   }
+
+  stringify(value: any): string {
+    if (_.isArray(value)) {
+      return value.map(this.stringify).join('\n')
+    }
+
+    switch (typeof value) {
+      case 'number':
+        if (_.isInteger(value)) { return [value.toString(), 'int'].join('\n') }
+        return [value.toString(), 'double'].join('\n')
+      case 'string':
+      default:
+        return [value.toString(), 'string'].join('\n')
+    }
+  }
 }
