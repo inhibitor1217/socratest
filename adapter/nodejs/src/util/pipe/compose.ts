@@ -8,16 +8,20 @@ export default function compose(obj: any): any {
     
     if (typeof obj === 'object') {
       if (_.isArray(obj)) {
-        return _.map(obj, (value) => compose(value)(param))
+        return Promise.all( _.map(obj, (item) => compose(item)(param)) )
       }
 
-      return _.mapValues(obj, (value) => compose(value)(param))
+      return Promise.all(_.entries(obj)
+        .map(([key, value]) =>
+          compose(value)(param)
+            .then((resolved: any) => [key, resolved])))
+        .then(_.fromPairs)
     }
 
     if (typeof obj === 'function') {
-      return obj(param)
+      return Promise.resolve(obj(param))
     }
 
-    return obj
+    return Promise.resolve(obj)
   }
 }
