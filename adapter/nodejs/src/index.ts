@@ -8,7 +8,7 @@ import { CommandLineOptionsRepository } from './options'
 import { TestRepositoryFactory } from './test/repository'
 import {
   IndividualTestRunner,
-  MockTestCaseRunner,
+  JsNativeTestCaseRunner,
 } from './test/runner'
 import { RETURN_CODES } from './util/const'
 import { BaseError } from './util/error'
@@ -36,7 +36,7 @@ export async function execute(argv: string[]): Promise<number> {
           .then(requires)
           .then((tests) => ({ config, tests })))
       .then(({ config, tests }) => Promise.resolve(config)
-          .then((config) => new IndividualTestRunner(config, new MockTestCaseRunner()))
+          .then((config) => new IndividualTestRunner(config, new JsNativeTestCaseRunner(config)))
           .then((runner) => runner.run(tests))
           .then((result) => {
             Promise.resolve(result)
