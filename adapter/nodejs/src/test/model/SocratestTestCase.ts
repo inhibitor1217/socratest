@@ -8,8 +8,8 @@ export interface SocratestTestCaseDto {
   id: string
   name: string
   description: string
-  inputFileName: string
-  outputFileName: string
+  inputFile: string
+  outputFile: string
   meta: SocratestTestCaseMetaDto
 }
 
@@ -26,16 +26,16 @@ export default class SocratestTestCase {
       id,
       name,
       description,
-      inputFileName,
-      outputFileName,
+      inputFile,
+      outputFile,
       meta,
     } = dto
 
     this.id = id
     this.name = name
     this.description = description
-    this.inputFileName = inputFileName
-    this.outputFileName = outputFileName
+    this.inputFileName = inputFile
+    this.outputFileName = outputFile
     this.meta = meta
   }
 }
