@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { get } from 'lodash/fp'
+import * as Rx from 'rxjs'
 import { ConfigRepositoryFactory } from './config'
 import { StrictGrader } from './grader'
 import { SimpleTestRunnerResultFormatter } from './logger/formatter'
@@ -13,19 +14,16 @@ import {
 import { RETURN_CODES } from './util/const'
 import { BaseError } from './util/error'
 import { BaseException } from './util/exception'
-import {
-  instance,
-  requires,
-} from './util/pipe'
+import { requires } from './util/pipe'
 
 export async function execute(argv: string[]): Promise<number> {
   const writer = new ConsoleWriter()
   const grader = new StrictGrader()
   const formatter = new SimpleTestRunnerResultFormatter()
 
-  return Promise.resolve(argv)
-      .then(instance(CommandLineOptionsRepository))
-      .then(get('options'))
+  return Rx.from(argv)
+      .pipe(CommandLineOptionsRepository.options)
+      .toPromise()
       .then(requires)
       .then(ConfigRepositoryFactory.from)
       .then(get('config'))

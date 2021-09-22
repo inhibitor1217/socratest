@@ -1,5 +1,5 @@
 import type { SocratestOptions } from './interface';
 
-export const defaultSocratestOptions: SocratestOptions = {
+export const DEFAULT_OPTIONS: SocratestOptions = {
   config: '.socratestrc.json',
 }

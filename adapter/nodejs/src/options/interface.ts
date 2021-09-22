@@ -1,7 +1,12 @@
+import type {
+  Observable,
+  UnaryFunction,
+} from 'rxjs'
+
 export interface SocratestOptions {
   config: string
 }
 
 export interface SocratestOptionsRepository {
-  get options(): Promise<SocratestOptions>
+  options: UnaryFunction<Observable<string>, Observable<SocratestOptions>>
 }

@@ -1,28 +1,55 @@
 import { ArgumentParser } from 'argparse'
-import { merge } from 'lodash'
-import { defaultSocratestOptions } from './const'
-import type { SocratestOptions, SocratestOptionsRepository } from './interface'
+import {
+  concat,
+  flow,
+  merge,
+} from 'lodash/fp'
+import * as Rx from 'rxjs'
+import { DEFAULT_OPTIONS } from './const'
+import type {
+  SocratestOptions,
+  SocratestOptionsRepository,
+} from './interface'
 
-export default class CommandLineOptionsRepository implements SocratestOptionsRepository {
-  private readonly parser: ArgumentParser
-
-  private readonly cmdArgs: any
-  
-  constructor(argv: string[]) {
-    this.parser = new ArgumentParser({
-      description: 'A node.js adapter for Socratest.',
-    })
-
-    this.setupArguments()
-
-    this.cmdArgs = this.parser.parse_args(argv.slice(2))
+namespace ArgParseAdapter {
+  interface ArgParseOption {
+    short: string
+    long: string
+    help: string
   }
 
-  private setupArguments(): void {
-    this.parser.add_argument('-c', '--config', { help: 'specify configuration file. default is .socratestrc.json.' })
+  const CMD_LINE_OPTIONS: Record<string, ArgParseOption> = {
+    CONFIG: {
+      short: '-c',
+      long: '--config',
+      help: `specify configuration file. default is ${DEFAULT_OPTIONS.config}`,
+    }
   }
 
-  get options(): Promise<SocratestOptions> {
-    return Promise.resolve(merge(defaultSocratestOptions, this.cmdArgs))
+  const attachParserOption =
+    ({ short, long, help }: ArgParseOption) =>
+    (parser: ArgumentParser): ArgumentParser => {
+      parser.add_argument(short, long, { help })
+      return parser
+    }
+
+  const parser = (): ArgumentParser => {
+    const parser = new ArgumentParser({ description: 'A node.js adapter for Socratest.' })
+    return flow(
+      attachParserOption(CMD_LINE_OPTIONS.CONFIG),
+    )(parser)
   }
+
+  export const parseArguments = (args: string[]) => parser().parse_args(args)
 }
+
+namespace CommandLineOptionsRepository {
+  export const options: SocratestOptionsRepository['options'] = Rx.pipe(
+    Rx.skip(2),
+    Rx.reduce<string, string[]>(concat, []),
+    Rx.map( ArgParseAdapter.parseArguments ),
+    Rx.map<any, SocratestOptions>(merge(DEFAULT_OPTIONS) ),
+  )
+}
+
+export default CommandLineOptionsRepository
