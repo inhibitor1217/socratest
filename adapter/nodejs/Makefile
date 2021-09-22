@@ -10,6 +10,7 @@ PKM?=$(if $(YARN),$(YARN),$(shell which npm))
 TSCONFIG_BUILD_PATH=./tsconfig.build.json
 COMPILE_DIR=dist
 BUILD_DIR=.bin
+COVERAGE_DIR=coverage
 
 help: info
 	@echo
@@ -19,6 +20,7 @@ help: info
 	@echo "  make deps             - install all dependencies."
 	@echo "  make compile          - compile source using build configuration."
 	@echo "  make build-bin        - build executables."
+	@echo "  make test             - run all tests."
 	@echo "  make clean            - clean all artifacts."
 
 info:
@@ -41,7 +43,12 @@ build-bin: compile
 	@echo "Building executable binary ..."
 	@pkg . --out-path $(BUILD_DIR)
 
+test: deps
+	@echo "Executing tests ..."
+	@npx jest
+
 clean:
 	@echo "Cleaning artifacts ..."
-	@if [ -d $(BUILD_DIR)   ]; then rm -r $(BUILD_DIR); fi
-	@if [ -d $(COMPILE_DIR) ]; then rm -r $(COMPILE_DIR); fi
+	@if [ -d $(BUILD_DIR)    ]; then rm -r $(BUILD_DIR); fi
+	@if [ -d $(COMPILE_DIR)  ]; then rm -r $(COMPILE_DIR); fi
+	@if [ -d $(COVERAGE_DIR) ]; then rm -r $(COVERAGE_DIR); fi
