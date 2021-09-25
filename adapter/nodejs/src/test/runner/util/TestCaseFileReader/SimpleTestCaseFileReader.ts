@@ -1,10 +1,17 @@
 import { readFile } from 'fs/promises'
-import { resolve } from 'path'
 import type { SocratestConfig } from '../../../../config'
 import type { SocratestTestCase } from '../../../model'
+import { SimpleFilePathResolver } from '../FilePathResolver'
+import type { FilePathResolver } from '../FilePathResolver'
 import type { TestCaseFileReader } from './interface'
 
 export default class SimpleTestCaseFileReader implements TestCaseFileReader {
+  private readonly filePathResolver: FilePathResolver
+
+  constructor() {
+    this.filePathResolver = new SimpleFilePathResolver()
+  }
+  
   input(
     config: SocratestConfig,
     testcase: SocratestTestCase,
@@ -23,6 +30,7 @@ export default class SimpleTestCaseFileReader implements TestCaseFileReader {
     config: SocratestConfig,
     path: string,
   ): Promise<string> {
-    return readFile(resolve(config.provider.location, path), { encoding: 'utf-8' })
+    return this.filePathResolver.resolve(config, path)
+      .then((resolvedPath) => readFile(resolvedPath, { encoding: 'utf-8' }))
   }
 }
