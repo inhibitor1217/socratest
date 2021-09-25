@@ -1,7 +1,7 @@
 {
-  "name": "@socratest/nodejs-adapter",
+  "name": "@socratest/cli",
   "version": "0.0.1",
-  "description": "A node.js adapter for Socratest",
+  "description": "CLI for Socratest",
   "bin": {
     "socratest": "./dist/bin/socratest.js"
   },

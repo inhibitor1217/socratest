@@ -7,9 +7,9 @@
   "author": "inhibitor <inhibitor@kaist.ac.kr>",
   "license": "MIT",
   "scripts": {
-    "adapter": "node_modules/@socratest/nodejs-adapter/.bin/nodejs-adapter-macos"
+    "socratest": "node_modules/@socratest/cli/.bin/cli-macos"
   },
   "devDependencies": {
-    "@socratest/nodejs-adapter": "link:../../../adapter/nodejs"
+    "@socratest/cli": "link:../../../cli"
   }
 }
