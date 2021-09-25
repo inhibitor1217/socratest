@@ -1,0 +1,14 @@
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "include": [
+    "./src/**/*.ts",
+    "./bin/**/*.ts"
+  ],
+  "exclude": [
+    "./dist/**/*",
+    "./node_modules/**/*"
+  ],
+  "compilerOptions": {
+    "experimentalDecorators": true,
+  }
+}
